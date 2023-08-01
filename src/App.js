@@ -1,12 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import Navbar from './components/Navbar'
+import Scenes from './components/Scenes'
+export default function App() {
   return (
-    <div className="App">
+    <>
+     <Navbar />
+    {/* <Scenes/> */}
+    <Scenes />
+   
      
-    </div>
-  );
+ 
+    </>
+  )
 }
-
-export default App;
