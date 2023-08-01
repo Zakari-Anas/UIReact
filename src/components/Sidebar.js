@@ -37,8 +37,8 @@ export default function Sidebar({ children }) {
               overflow-hidden transition-all'
           >
             <div className="leading-4">
-              <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+            <MoreVertical size={20} />
+              <MoreVertical size={20} />
             </div>
             <MoreVertical size={20} />
           </div>
