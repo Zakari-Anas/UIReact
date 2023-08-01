@@ -18,9 +18,9 @@ function Scenes() {
   };
 
   return (
-    <Container className='mx-0'>
-      <Row  className='w-screen '>
-        <Col className=' p-1 ' style={{background:"#e2e2f0"}}>
+    <Container className='ml-0'>
+      <Row  className='  '>
+        <Col className=' p-1  ' style={{background:"#e2e2f0"}}>
           <Nav tabs >
             {tabs.map((tab, index) => (
               <NavItem key={index}>

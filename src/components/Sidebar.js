@@ -7,15 +7,9 @@ const SidebarContext = createContext()
 export default function Sidebar({ children }) {
     const [expanded, setExpanded] = useState(true)
   return (
-    <aside className='h-screen w-20'>
+    <aside className='h-screen w-32'>
         <nav className='h-full flex-col bg-white border-r shadow-sm'>
         <div className='p-4 pb-2 flex justify-between items-center'>
-
-        <img
-            src="https://img.logoipsum.com/243.svg"
-            className='overflow-hidden transition-all'
-            alt=""
-          />
           <button
             
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
@@ -38,9 +32,9 @@ export default function Sidebar({ children }) {
           >
             <div className="leading-4">
             <MoreVertical size={20} />
-              <MoreVertical size={20} />
+             
             </div>
-            <MoreVertical size={20} />
+         
           </div>
         </div>
         </nav>
