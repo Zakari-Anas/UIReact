@@ -18,7 +18,7 @@ function Navbar() {
                                 <img className="w-36 "  src="https://admin.aryel.io/assets/img/brand/logo-white.png"></img>
                             </a>
                          </div>
-                        <div>primary nav</div>
+                     
                     </div>
                     <div className="space-x-2"> My  x AR Campaign 
                     <span className="bg-indigo-100 text-indigo-800 text-xs font-medium ml-2 mr-2 px-2.5 py-0.5 rounded-lg dark:bg-indigo-900 dark:text-indigo-300">Draft</span>

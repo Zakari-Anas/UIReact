@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { Container, Row, Col, Nav, NavLink, NavItem, TabContent, TabPane, Card, CardTitle, CardText, Button } from 'reactstrap';
+import { Container, Row, Col, Nav, NavLink, NavItem, TabContent, TabPane } from 'reactstrap';
 
 function Scenes() {
   const [key, setKey] = useState('home');
@@ -18,14 +18,14 @@ function Scenes() {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Nav tabs>
+    <Container className='mx-0'>
+      <Row  className='w-screen '>
+        <Col className=' p-1 ' style={{background:"#e2e2f0"}}>
+          <Nav tabs >
             {tabs.map((tab, index) => (
               <NavItem key={index}>
                 <NavLink
-                  className={key === `tab-${index}` ? 'active' : ''}
+                  className={key === `tab-${index}` ? 'active' : ' '}
                   onClick={() => setKey(`tab-${index}`)}
                 >
                   {tab.title}
@@ -40,7 +40,7 @@ function Scenes() {
           </Nav>
         </Col>
       </Row>
-      <TabContent activeTab={key}>
+      <TabContent activeTab={key} className='p-1 '>
         {tabs.map((tab, index) => (
           <TabPane key={index} tabId={`tab-${index}`}>
             <Row>
