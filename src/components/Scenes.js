@@ -18,7 +18,7 @@ function Scenes() {
   };
 
   return (
-    <Container className='ml-0 ' style={{background:"#f6f5f9"}}>
+    <Container className='ml-0 max-w-full' style={{background:"#f6f5f9"}}>
       <Row  className=' '>
         <Col className=' p-1  ' style={{background:"#e2e2f0"}}>
           <Nav tabs >
@@ -42,7 +42,7 @@ function Scenes() {
       </Row>
       <div className='flex'>
         <div>
-      <TabContent activeTab={key} className='p-1 bg-white shadow-md sm:w-[444px] h-[668px] lg:w-[888px] rounded-xl p-5 ml-1 mt-1'>
+      <TabContent activeTab={key} className=' bg-white shadow-md sm:w-[444px]  lg:w-[888px]  h-[668px] rounded-xl p-5 ml-1 mt-1'>
         {tabs.map((tab, index) => (
           <TabPane className='' key={index}  tabId={`tab-${index}`}>
             <Row>
