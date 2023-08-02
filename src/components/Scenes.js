@@ -19,7 +19,7 @@ function Scenes() {
 
   return (
     <Container className='ml-0'>
-      <Row  className='  '>
+      <Row  className='  max-w-full w-screen '>
         <Col className=' p-1  ' style={{background:"#e2e2f0"}}>
           <Nav tabs >
             {tabs.map((tab, index) => (
