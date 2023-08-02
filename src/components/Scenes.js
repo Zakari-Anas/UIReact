@@ -42,9 +42,9 @@ function Scenes() {
       </Row>
       <div className='flex'>
         <div>
-      <TabContent activeTab={key} className='p-1'>
+      <TabContent activeTab={key} className='p-1 bg-white shadow-md h-[668px] w-[888px] rounded-xl p-5 ml-1 mt-1'>
         {tabs.map((tab, index) => (
-          <TabPane className='bg-white shadow-md h-[668px] w-[888px] rounded-xl p-5 ml-1 mt-1' key={index}  tabId={`tab-${index}`}>
+          <TabPane className='' key={index}  tabId={`tab-${index}`}>
             <Row>
               <Col sm="12">
                 <h4 >
