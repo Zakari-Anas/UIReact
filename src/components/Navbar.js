@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IconBulb, IconMoon, IconArrowForwardUp,IconArrowBack } from '@tabler/icons-react';
+import TabContents from "./TabContents";
 function Navbar() {
 
     const [isDropdownOpen, setDropdownOpen] = useState(false);

@@ -1,13 +1,92 @@
-import React from 'react'
-import { useContext, createContext, useState } from "react";
-
+import React, { useEffect, useRef, useState } from 'react';
+import Draggable from 'react-draggable';
 import { Music, Type, Video,Rotate3d ,Layers,Shapes,Info} from "lucide-react"
 import {IconPhoto} from '@tabler/icons-react'
+import { BrowserRouter as Router, Switch, Routes,Route, Link } from "react-router-dom";
+import TabContents from './TabContents';
 
-const SidebarContext = createContext()
-export default function Sidebar({ children }) {
-    const [expanded, setExpanded] = useState(true)
+
+
+const PictureList = [
+  { id: 1, component: Music, url:"https://lucide.dev/icons/music"},
+  { id: 3, component: Type , url:" https://lucide.dev/icons/type"},
+  { id: 4, component: Rotate3d, url:"https://lucide.dev/icons/Rotate3d" },
+  { id: 5, component: Layers, url:"https://lucide.dev/icons/Layers" },
+  { id: 6, component: Shapes , url:"https://lucide.dev/icons/Shapes"},
+  { id: 7, component: Info , url:"https://lucide.dev/icons/Info"},
+];
+
+
+
+export default function Sidebar({ }) {
+   
+  
+  const [tabs, setTabs] = useState([
+    {
+      id: 1,
+      draggedImages: [],
+    },
+  ]);
+
+  const [activeTabId, setActiveTabId] = useState(1);
+
+  const handleDragInTab = (tabId) => {
+    setActiveTabId(tabId);
+  };
+
+const handleDrag = (e, data, picture) => {
+  const draggedImage = {
+    id: picture.id,
+    url: picture.url,
+    position: { x: data.x, y: data.y },
+  };
+
+
+  setTabs((prevTabs) => {
+    return prevTabs.map((tab) => {
+      if (tab.id === activeTabId) {
+        const index = tab.draggedImages.findIndex((img) => img.id === picture.id);
+        if (index !== -1) {
+          return {
+            ...tab,
+            draggedImages: [
+              ...tab.draggedImages.slice(0, index),
+              draggedImage,
+              ...tab.draggedImages.slice(index + 1),
+            ],
+          };
+        } else {
+          return {
+            ...tab,
+            draggedImages: [...tab.draggedImages, draggedImage],
+          };
+        }
+      } else {
+        return tab;
+      }
+    });
+  } )
+};
+
+const handleAddTab = () => {
+  const newTabId = tabs.length + 1;
+  setTabs((prevTabs) => [
+    ...prevTabs,
+    {
+      id: newTabId,
+      draggedImages: [],
+    },
+  ]);
+};
+
+const handleRemoveTab = (tabId) => {
+  if (tabs.length > 1) {
+    setTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
+  }
+};
+
   return (
+    <Router>
     <aside className='h-screen w-16'>
         <nav className='h-full flex-col bg-white border-r shadow-sm'>
      
@@ -16,69 +95,40 @@ export default function Sidebar({ children }) {
        <div className='text-xs p-1'>Help </div>
        <div className='p-1'> <Info/> </div>
           </div>
-        <div className="border-t flex p-3">
-        <Rotate3d/>
-          
-         
-          </div>
-          <div className="border-t flex p-3">
-          <Video/>
-          </div>
-        
-          <div className="border-t flex p-3">
-          <IconPhoto/>
-          </div>
-          <div className="border-t flex p-3">
-         <Music/>
-          </div>
-          <div className="border-t flex p-3">
-         <Type/>
-          </div>
-          <div className="border-t flex p-3">
-         <Shapes/>
-          </div>
 
-          <div className="border-t flex p-3">
-         <Layers/>
-          </div>
+          {PictureList.map((picture) => (
+                <div  className="border-t flex-col p-3" key={picture.id}>
+                  <Draggable
+                    handle=".handle"
+                    defaultPosition={{ x: 0, y: 0 }}
+                    position={{ x: 0, y: 0 }}
+                    onStop={(e, data) => handleDrag(e, data, picture)}
+                    bounds="parent"
+                  >
+                    <div className="border-t flex p-0 handle">
+                        {React.createElement(picture.component, { size: 20 })}
+                    </div>
+                  </Draggable>
+                </div>
+              ))}
+          
+       
         </nav>
 
     </aside>
+
+    <Routes>
+            {tabs.map((tab) => (
+              <Route 
+                  key={tab.id} 
+                  path={`/tab/${tab.id}`} 
+                  element={
+                        <TabContents draggedImages={tab.draggedImages} 
+                            handleDrag={(e, data, picture) => handleDrag(e, data, picture)}/>
+                  } 
+              />
+            ))}
+          </Routes>
+    </Router>
   )
 }
-
-
-
-export function SidebarItem({ icon, text, active, alert }) {
-   
-    
-    return (
-      <li
-        className={`
-          relative flex items-center py-2 px-3 my-1
-          font-medium rounded-md cursor-pointer
-          transition-colors group
-          ${
-            active
-              ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-              : "hover:bg-indigo-50 text-gray-600"
-          }
-      `}
-      >
-        {icon}
-        <span
-          className='overflow-hidden transition-all'
-        >
-          {text}
-        </span>
-        {alert && (
-          <div
-            className='absolute right-2 w-2 h-2 rounded bg-indigo-400 '
-          />
-        )}
-  
-     
-      </li>
-    )
-  }
-  
