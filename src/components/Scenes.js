@@ -1,8 +1,29 @@
 import { useState } from 'react';
 import { FaPlus ,FaTimes} from 'react-icons/fa';
 import { Container, Row, Col, Nav, NavLink, NavItem, TabContent, TabPane } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Routes,Route, Link } from "react-router-dom";
-import TabContents from './TabContents';
+import { BrowserRouter as Router, Switch, Routes,Route, Link, useRoutes } from "react-router-dom";
+import React, { Suspense, useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import './style.css'
+import {Canvas} from '@react-three/fiber'
+import {OrbitControls, useGLTF} from '@react-three/drei'
+
+function Model({ ...props }) {
+  const group = useRef()
+  const { nodes, materials } = useGLTF('/shoe.gltf')
+  return (
+    <group ref={group} {...props} dispose={null} scale={3}>
+      <mesh geometry={nodes.shoe.geometry} material={materials.laces} />
+      <mesh geometry={nodes.shoe_1.geometry} material={materials.mesh} />
+      <mesh geometry={nodes.shoe_2.geometry} material={materials.caps} />
+      <mesh geometry={nodes.shoe_3.geometry} material={materials.inner} />
+      <mesh geometry={nodes.shoe_4.geometry} material={materials.sole} />
+      <mesh geometry={nodes.shoe_5.geometry} material={materials.stripes} />
+      <mesh geometry={nodes.shoe_6.geometry} material={materials.band} />
+      <mesh geometry={nodes.shoe_7.geometry} material={materials.patch} />
+    </group>
+  )
+}
 function Scenes() {
   const [key, setKey] = useState('home');
 
@@ -11,16 +32,30 @@ function Scenes() {
       id: 1,
       title: `Scene 1`,
       draggedImages: [],
+      content : `c1`
     },
     {
       id: 2,
       title: `Scene 2`,
       draggedImages: [],
+      content : `c2`
     },
     {
       id: 3,
       title: `Scene 3`,
       draggedImages: [],
+      content : <div className='content-center'>
+      <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}><Canvas className='min-h-full'>
+      <Suspense fallback={null}>
+      <ambientLight  />
+      <spotLight intensity={0.9} angle={0.1} penumbra={1}
+                  position={[10,15,10]} castShadow />
+        <Model/>
+        <OrbitControls enablePan={true} enableZoom={true}   />
+      </Suspense>
+    </Canvas>
+    </div> 
+    </div> 
     },
   ]);
 
@@ -83,7 +118,7 @@ function Scenes() {
             {tabs.map((tab, index) => (
               <NavItem key={index}>
                 <NavLink
-                  className={key === `tab-${index}` ? 'active' : ' '}
+                   className={key === `tab-${index}` ? 'active flex' : ' flex'} 
                   onClick={() => setKey(`tab-${index}`)}
                 >
                   {tab.title}
@@ -92,7 +127,7 @@ function Scenes() {
                     className='pl-1 cursor-pointer'
                     onClick={() => handleCloseTab(index)} // Add the close click handler
                   >
-                    <FaTimes />
+                    <FaTimes size={10} />
                   </span>
                 </NavLink>
               </NavItem>
@@ -109,24 +144,21 @@ function Scenes() {
         <div>
       <TabContent activeTab={key} className='p-1 bg-white shadow-md sm:w-[444px] h-[668px] lg:w-[888px] rounded-xl p-5 ml-1 mt-1'>
         {tabs.map((tab, index) => (
-          <TabPane className='' key={index}  tabId={`tab-${index}`}>
-            <Row>
-              <Col sm="12">
-              <Routes>
-            {tabs.map((tab) => (
-              <Route 
-                  key={tab.id} 
-                  path={`/tab/${tab.id}`} 
-                  element={
-                        <TabContents draggedImages={tab.draggedImages} 
-                            handleDrag={(e, data, picture) => handleDrag(e, data, picture)}/>
-                  } 
-                
-              />
-            ))}
-          </Routes>
-              </Col>
-            </Row>
+          <TabPane className='max-h-full' key={index}  tabId={`tab-${index}`}>
+           
+              
+              {key === `tab-${index}` && <div className='content-center min-h-full '>{tab.content}</div>}
+              {/* <Canvas>
+                <Suspense fallback={null}>
+                <ambientLight  />
+                <spotLight intensity={0.9} angle={0.1} penumbra={1}
+                            position={[10,15,10]} castShadow />
+                  <Model/>
+                  <OrbitControls enablePan={true} enableZoom={true}   />
+                </Suspense>
+              </Canvas>
+       */}
+            
           </TabPane>
         ))}
         
