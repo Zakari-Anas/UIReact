@@ -4,7 +4,8 @@ import { Container, Row, Col, Nav, NavLink, NavItem, TabContent, TabPane } from 
 import { BrowserRouter as Router, Switch, Routes,Route, Link, useRoutes } from "react-router-dom";
 import React, { Suspense, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import './style.css'
+import {Tabs, Text} from '@geist-ui/react'
+
 import {Canvas} from '@react-three/fiber'
 import {OrbitControls, useGLTF} from '@react-three/drei'
 
@@ -13,9 +14,9 @@ function Model({ ...props }) {
   const { nodes, materials } = useGLTF('/shoe.gltf')
   return (
     <group ref={group} {...props} dispose={null} scale={3}>
-      <mesh geometry={nodes.shoe.geometry} material={materials.laces} />
-      <mesh geometry={nodes.shoe_1.geometry} material={materials.mesh} />
-      <mesh geometry={nodes.shoe_2.geometry} material={materials.caps} />
+      <mesh geometry={nodes.shoe.geometry} material={materials.laces} material-color={"red"}/>
+      <mesh geometry={nodes.shoe_1.geometry} material={materials.mesh} material-color={"red"} />
+      <mesh geometry={nodes.shoe_2.geometry} material={materials.caps} material-color={"blue"} />
       <mesh geometry={nodes.shoe_3.geometry} material={materials.inner} />
       <mesh geometry={nodes.shoe_4.geometry} material={materials.sole} />
       <mesh geometry={nodes.shoe_5.geometry} material={materials.stripes} />
@@ -32,26 +33,48 @@ function Scenes() {
       id: 1,
       title: `Scene 1`,
       draggedImages: [],
-      content : `c1`
+      content :<div className='content-center'>
+      <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' ,flexDirection: 'column' }}><Canvas className='min-h-full'>
+      <Suspense fallback={null}>
+      <ambientLight  />
+      <spotLight intensity={0.9} angle={0.1} penumbra={1}
+                  position={[10,15,10]} castShadow />
+        <Model/>
+        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true}   />
+      </Suspense>
+    </Canvas>
+    </div> 
+    </div> 
     },
     {
       id: 2,
       title: `Scene 2`,
       draggedImages: [],
-      content : `c2`
+      content : <div className='content-center'>
+      <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' ,flexDirection: 'column' }}><Canvas className='min-h-full'>
+      <Suspense fallback={null}>
+      <ambientLight  />
+      <spotLight intensity={0.9} angle={0.1} penumbra={1}
+                  position={[10,15,10]} castShadow />
+        <Model/>
+        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true}   />
+      </Suspense>
+    </Canvas>
+    </div> 
+    </div> 
     },
     {
       id: 3,
       title: `Scene 3`,
       draggedImages: [],
       content : <div className='content-center'>
-      <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}><Canvas className='min-h-full'>
+      <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' ,flexDirection: 'column' }}><Canvas className='min-h-full'>
       <Suspense fallback={null}>
       <ambientLight  />
       <spotLight intensity={0.9} angle={0.1} penumbra={1}
                   position={[10,15,10]} castShadow />
         <Model/>
-        <OrbitControls enablePan={true} enableZoom={true}   />
+        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true}   />
       </Suspense>
     </Canvas>
     </div> 
@@ -111,7 +134,7 @@ function Scenes() {
 
   return (
     <Router>
-    <Container className='ml-0 w-max min-w-full' style={{background:"#f6f5f9"}}>
+    <Container className='ml-0 max-w-full' style={{background:"#f6f5f9"}}>
       <Row  className=' '>
         <Col className=' p-1  ' style={{background:"#e2e2f0"}}>
           <Nav tabs >
@@ -144,7 +167,7 @@ function Scenes() {
         <div>
       <TabContent activeTab={key} className='p-1 bg-white shadow-md sm:w-[444px] h-[668px] lg:w-[888px] rounded-xl p-5 ml-1 mt-1'>
         {tabs.map((tab, index) => (
-          <TabPane className='max-h-full' key={index}  tabId={`tab-${index}`}>
+          <TabPane className='' key={index}  tabId={`tab-${index}`}>
            
               
               {key === `tab-${index}` && <div className='content-center min-h-full '>{tab.content}</div>}
@@ -167,6 +190,19 @@ function Scenes() {
       </TabContent>
       </div>
       <div className='bg-white ml-2 mt-2 h-[668px] w-[414px] shadow-md rounded-xl'>
+
+      <Tabs initialValue="html" hideDivider className='p-3' marginLeft={1}>
+  <Tabs.Item label="Scene" value="html"  >
+    <Text mt={0}> Orientation</Text>
+   
+  </Tabs.Item>
+  <Tabs.Item label="Assets" value="css" className='content-center items-center' marginLeft={13}>
+  <Text mt={0}>Overlay assets</Text>
+    <div className='h-8 w-80 border shadow-sm bg-yellow-200 mb-3'></div>
+   <Text className='mb-3'> AR assets</Text>  
+   <div className='h-8 w-80 border shadow-sm bg-yellow-200 mb-3'></div>
+  </Tabs.Item>
+</Tabs>
 
       </div>
       </div>

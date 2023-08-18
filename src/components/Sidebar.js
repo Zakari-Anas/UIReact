@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import { Music, Type, Video,Rotate3d ,Layers,Shapes,Info} from "lucide-react"
 import {IconPhoto} from '@tabler/icons-react'
 import { BrowserRouter as Router, Switch, Routes,Route, Link } from "react-router-dom";
-import TabContents from './TabContents';
+
 
 
 
@@ -123,8 +123,8 @@ const handleRemoveTab = (tabId) => {
                   key={tab.id} 
                   path={`/tab/${tab.id}`} 
                   element={
-                        <TabContents draggedImages={tab.draggedImages} 
-                            handleDrag={(e, data, picture) => handleDrag(e, data, picture)}/>
+                        <div>cc</div>
+                        
                   } 
               />
             ))}

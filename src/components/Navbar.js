@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IconBulb, IconMoon, IconArrowForwardUp,IconArrowBack } from '@tabler/icons-react';
-import TabContents from "./TabContents";
+
 function Navbar() {
 
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -11,8 +11,8 @@ function Navbar() {
     return (
         // Navbar
         <nav style={{background:'#1b0756'}}>
-            <div className="max-w-full mx-auto  text-yellow-50">
-                <div className="flex justify-between items-center">
+            <div className="min-w-full mx-auto  text-yellow-50">
+                <div className="flex justify-between items-center ">
                      <div className="flex  space-x-4 px-2 py-3 items-center">
                          <div  className="ml-3">
                             <a href="#">
